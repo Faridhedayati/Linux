@@ -7,16 +7,15 @@
 # The username, password, and host for the account will be displayed.
 
 # Make sure the script is being executed with superuser privileges.
-if [[ "${UID}" -ne 0 ]]
-then echo 'Please run with sudo or as root.'
-exit 1
+if [[ "${UID}" -ne 0 ]]; then
+    echo 'Please run with sudo or as root.'
+    exit 1
 fi
 
 # If they don't supply at least one argument, then give them help.
-if [[ "${#}" -lt 1 ]]
-then
-echo "Usage: ${0} USER_NAME [COMMENT]..."
-echo 'Create an account on the local system with the name of USER_NAME and a comments field of COMMENT.'
+if [[ "${#}" -lt 1 ]]; then
+    echo "Usage: ${0} USER_NAME [COMMENT]..."
+    echo 'Create an account on the local system with the name of USER_NAME and a comments field of COMMENT.'
 fi
 
 # The first parameter is the user name
@@ -34,20 +33,18 @@ useradd -c "${COMMENT}" -m ${USER_NAME}
 
 # Check to use if the useradd command succeeded.
 # We don't want to tell the user that an account was created it hasn't been.
-if [[ "${?}" -ne 0 ]]
-then
-echo 'The account could not be created.'
-exit 1
+if [[ "${?}" -ne 0 ]]; then
+    echo 'The account could not be created.'
+    exit 1
 fi
 
 # Set the password.
 echo ${PASSWORD} | passwd --stdin ${USER_NAME}
 
 # Check to see if the passwd command succeeded.
-if [[ "${?}" -ne 0 ]]
-then
-echo 'The password for the account could not be set.'
-exit 1
+if [[ "${?}" -ne 0 ]]; then
+    echo 'The password for the account could not be set.'
+    exit 1
 fi
 
 # Force password change on first login.
@@ -67,4 +64,3 @@ echo 'host:'
 echo "${HOSTNAME}"
 echo
 exit 0
-
