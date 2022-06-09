@@ -5,10 +5,9 @@
 # The username, password, and host for the account will be displayed.
 
 # Make sure the script is being executed with superior privileges.
-if [[ "${UID}" -ne 0 ]]
-then
-echo 'Please run with sudo or as root'
-exit 1
+if [[ "${UID}" -ne 0 ]]; then
+    echo 'Please run with sudo or as root'
+    exit 1
 fi
 
 # Get the username (login).
@@ -25,19 +24,17 @@ useradd -c "${COMMENT}" -m ${USER_NAME}
 
 # Check to see if the useradd command succeeded.
 # We don't want to the user that an account was created when it hasn't been.
-if [[ "${?}" -ne 0 ]]
-then
-echo 'The account could not be created.'
-exit 1
+if [[ "${?}" -ne 0 ]]; then
+    echo 'The account could not be created.'
+    exit 1
 fi
 
 # Set the password.
 echo ${PASSWORD} | passwd --stdin ${USER_NAME}
 
-if [[ "${?}" -ne 0 ]]
-then
-echo 'The password for the account could not be set.'
-exit 1
+if [[ "${?}" -ne 0 ]]; then
+    echo 'The password for the account could not be set.'
+    exit 1
 fi
 
 # Force password change on first login.
